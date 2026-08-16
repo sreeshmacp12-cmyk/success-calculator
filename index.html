@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eurovision Success Calculator</title>
+</head>
+<body>
+
+    <h2>Eurovision Song Success Calculator</h2>
+    
+    <!-- Input Form for Prediction -->
+    <form action="/predict" method="POST">
+        <label>Song In English?:</label>
+        <select name="Song.In.English" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        <br><br>
+
+        <label>Group / Solo:</label>
+        <select name="Group.Solo" required>
+            <option value="Solo">Solo</option>
+            <option value="Group">Group</option>
+        </select>
+        <br><br>
+
+        <label>Artist Gender:</label>
+        <select name="Artist.gender" required>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Mixed">Mixed</option>
+        </select>
+        <br><br>
+
+        <label>Danceability (0.0 to 1.0):</label>
+        <input type="number" step="0.01" min="0" max="1" name="danceability" placeholder="e.g. 0.65" required>
+        <br><br>
+
+        <label>Energy (0.0 to 1.0):</label>
+        <input type="number" step="0.01" min="0" max="1" name="energy" placeholder="e.g. 0.80" required>
+        <br><br>
+
+        <button type="submit">Predict Points</button>
+    </form>
+
+    <!-- Prediction Output -->
+    {% if prediction is not none %}
+        <h3>Predicted Total Points: {{ prediction }}</h3>
+    {% endif %}
+
+    <hr>
+
+    <!--Voting History Form -->
+    <h2>Historical Voting Best Friend</h2>
+    <form action="/voting_history" method="POST">
+        <label>Select Country:</label>
+        <select name="country" required>
+            {% for country in countries %}
+                <option value="{{ country }}">{{ country }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Find Best Friend</button>
+    </form>
+
+    <!-- Voting History Output -->
+    {% if best_friend %}
+        <h3>{{ selected_country }}'s top point giver is: {{ best_friend }}</h3>
+    {% endif %}
+
+</body>
+</html>
